@@ -1,12 +1,19 @@
 game = {}
 
 function game.load()
+   game.borderx = 0
+   game.bordery = 0
+   game.borderw = 0
+   game.borderh = 0
+
+   game.levels = {game.create_level1, game.create_level2}
+   game.current_level = 1
+   game.reset(game.current_level)
+end
+
+function game.reset(level)
+   game.level = game.levels[level]()
    game.clock = 10
-   
-   game.borderx = 100
-   game.bordery = 100
-   game.borderw = 300
-   game.borderh = 200
 
    game.pw = 10
    game.ph = 10
@@ -20,9 +27,6 @@ function game.load()
    game.exitw = 20
    game.exitx = game.borderx + game.borderw - game.exitw
    game.exity = game.bordery + game.borderh - game.exitw
-   
-   game.levels = {game.create_level1, game.create_level2}
-   game.level = game.levels[2]()
 end
 
 function game.draw()
@@ -131,10 +135,13 @@ function game.obstacle_collision()
 end
 
 function game.exit()
-   if game.px > game.exitx and game.py > game.exity then
-      game.br = 255
-      game.bg = 0
-      game.bb = 150
+   if game.px > game.exitx and game.py > game.exity  and game.px + game.pw < game.exitx + game.exitw and game.py + game.ph < game.exity + game.exitw then
+      if game.current_level < table.getn(game.levels) then
+	 game.current_level = game.current_level + 1
+	 game.reset(game.current_level)
+      else
+	 state = "over"
+      end
    end
 end
 
@@ -166,12 +173,22 @@ function game.draw_level()
 end
 
 function game.create_level1()
+   game.borderx = 100
+   game.bordery = 100
+   game.borderw = 300
+   game.borderh = 200
+
    local level = {}
    table.insert(level, {x = game.borderx + 100, y = game.bordery + 100, w = 25, h  = 40})
    return level
 end
 
 function game.create_level2()
+   game.borderx = 100
+   game.bordery = 100
+   game.borderw = 300
+   game.borderh = 200
+
    local level = {}
    table.insert(level, {x = game.borderx + 100, y = game.bordery, w = 20, h = game.borderh - 45})
    table.insert(level, {x = game.borderx + 200, y = game.bordery+45, w = 20, h = game.borderh - 45})

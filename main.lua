@@ -2,6 +2,7 @@ debug = false
 
 require('title')
 require('game')
+require("over")
 
 function love.load()
    imgf = {"game_font_15"}
@@ -16,10 +17,11 @@ function love.load()
    font = love.graphics.newImageFont(imgs["game_font_15"], "abcdefghijklmnopqrstuvwxyz,.!:;?1234567890 \"")
    love.graphics.setFont(font)
    
-   state = "game"
+   state = "over"
 
    title.load()
    game.load()
+   over.load()
 end
 
 function love.keypressed(key, unicode)
@@ -33,6 +35,8 @@ function love.keypressed(key, unicode)
       title.keypressed(key, unicode)
    elseif state == "game" then
       game.keypressed(key, unicode)
+   elseif state == "over" then
+      over.keypressed(key, unicode)
    end
 end
 
@@ -55,5 +59,7 @@ function love.draw()
       title.draw()
    elseif state == "game" then
       game.draw()
+   elseif state == "over" then
+      over.draw()
    end
 end
