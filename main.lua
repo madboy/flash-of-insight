@@ -16,6 +16,11 @@ function love.load()
 
    font = love.graphics.newImageFont(imgs["game_font_15"], "abcdefghijklmnopqrstuvwxyz,.!:;?1234567890 \"")
    love.graphics.setFont(font)
+
+   wall_s = love.audio.newSource("assets/wall.ogg", "static")
+   exit_s = love.audio.newSource("assets/exit.ogg", "static")
+   border_s = love.audio.newSource("assets/border.ogg", "static")
+   title_s = love.audio.newSource("assets/title.ogg", "stream")
    
    state = "title"
 
