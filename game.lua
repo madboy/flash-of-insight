@@ -109,12 +109,16 @@ function game.obstacle_collision()
 	 game.py = r.y - game.ph
       end
       -- 2
-      if game.px > r.x and game.px < (r.x + r.w) and game.px + game.pw < r.x + r.w and game.py < r.y and game.py + game.ph > r.y then
+      if game.px >= r.x and game.px < (r.x + r.w) and game.px + game.pw <= r.x + r.w and game.py < r.y and game.py + game.ph > r.y then
 	 game.py = r.y - game.ph
       end
       -- 3
+      if game.px > r.x and game.px < r.x + r.w and game.px + game.pw > r.x + r.w and game.py < r.y and game.py + game.ph > r.y then
+	 game.px = r.x + r.w
+	 game.py = r.y - game.ph
+      end
       -- 4
-      if game.px < r.x and game.px + game.pw > r.x and game.px < r.x + r.w and game.py > r.y and game.py + game.ph < r.y + r.h then
+      if game.px < r.x and game.px + game.pw > r.x and game.px < r.x + r.w and game.py > r.y and game.py + game.ph <= r.y + r.h then
 	 game.px = r.x - game.pw
       end
       -- 5
@@ -123,8 +127,19 @@ function game.obstacle_collision()
 	 game.px = r.x + r.w
       end
       -- 7
+      if game.px < r.x and game.px + game.pw > r.x and game.px + game.pw < r.x + r.w and game.py > r.y and game.py + game.ph > r.y + r.h  and game.py < r.y + r.h then
+	 game.px = r.x - game.pw
+	 game.py = r.y + r.h - game.ph
+      end
       -- 8
+      if  game.px >= r.x and game.px < (r.x + r.w) and game.px + game.pw <= r.x + r.w and game.py > r.y and game.py < r.y + r.h and game.py + game.ph > r.y + r.h then
+	 game.py = r.y + r.h
+      end
       -- 9
+      if game.px > r.x and game.px < r.x + r.w and game.py > r.y and game.py < r.y + r.h then
+	 game.px = r.x + r.w
+	 game.py = r.y + r.h
+      end
    end
 end
 
