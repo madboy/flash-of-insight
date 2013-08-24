@@ -20,8 +20,9 @@ function game.load()
    game.exitw = 20
    game.exitx = game.borderx + game.borderw - game.exitw
    game.exity = game.bordery + game.borderh - game.exitw
-
-   game.level = game.create_level1()
+   
+   game.levels = {game.create_level1, game.create_level2}
+   game.level = game.levels[2]()
 end
 
 function game.draw()
@@ -95,7 +96,7 @@ function game.obstacle_collision()
 	 game.py = r.y - game.ph
       end
       -- 2
-      if game.px >= r.x and game.px < (r.x + r.w) and game.px + game.pw <= r.x + r.w and game.py < r.y and game.py + game.ph > r.y then
+      if game.px >= r.x and game.px <= (r.x + r.w) and game.px + game.pw <= r.x + r.w and game.py <= r.y and game.py + game.ph >= r.y then
 	 game.py = r.y - game.ph
       end
       -- 3
@@ -104,12 +105,12 @@ function game.obstacle_collision()
 	 game.py = r.y - game.ph
       end
       -- 4
-      if game.px < r.x and game.px + game.pw > r.x and game.px < r.x + r.w and game.py > r.y and game.py + game.ph <= r.y + r.h then
+      if game.px <= r.x and game.px + game.pw >= r.x and game.px <= r.x + r.w and game.py >= r.y and game.py + game.ph <= r.y + r.h then
 	 game.px = r.x - game.pw
       end
       -- 5
       -- 6
-      if game.px > r.x and game.px < r.x + r.w and game.px + game.pw > r.x + r.w and game.py > r.y and game.py + game.ph < r.y + r.h then
+      if game.px >= r.x and game.px <= r.x + r.w and game.px + game.pw >= r.x + r.w and game.py >= r.y and game.py + game.ph <= r.y + r.h then
 	 game.px = r.x + r.w
       end
       -- 7
@@ -167,5 +168,12 @@ end
 function game.create_level1()
    local level = {}
    table.insert(level, {x = game.borderx + 100, y = game.bordery + 100, w = 25, h  = 40})
+   return level
+end
+
+function game.create_level2()
+   local level = {}
+   table.insert(level, {x = game.borderx + 100, y = game.bordery, w = 20, h = game.borderh - 45})
+   table.insert(level, {x = game.borderx + 200, y = game.bordery+45, w = 20, h = game.borderh - 45})
    return level
 end
