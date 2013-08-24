@@ -17,7 +17,7 @@ function love.load()
    font = love.graphics.newImageFont(imgs["game_font_15"], "abcdefghijklmnopqrstuvwxyz,.!:;?1234567890 \"")
    love.graphics.setFont(font)
    
-   state = "over"
+   state = "title"
 
    title.load()
    game.load()
