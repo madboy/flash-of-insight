@@ -9,6 +9,7 @@ function game.load()
    game.borderh = 200
 
    game.pw = 10
+   game.ph = 10
    game.px = game.borderx
    game.py = game.bordery
 
@@ -20,7 +21,7 @@ function game.load()
    game.exitx = game.borderx + game.borderw - game.exitw
    game.exity = game.bordery + game.borderh - game.exitw
 
-   game.level1 = game.create_level1()
+   game.level = game.create_level1()
 end
 
 function game.draw()
@@ -29,6 +30,7 @@ function game.draw()
    game.draw_border()
    game.draw_player()
    game.draw_exit()
+   game.draw_level()
    love.graphics.setColor(255,255,255)
 end
 
@@ -88,11 +90,42 @@ function game.border_collision()
       game.py = game.bordery
    end
    if (game.py + game.pw) > (game.bordery + game.borderh) then
-      game.py = game.bordery + game.borderh - game.pw
+      game.py = game.bordery + game.borderh - game.ph
    end
 end
 
 function game.obstacle_collision()
+   for _, r in ipairs(game.level) do
+      --if (game.px + game.pw) > r.x and game.px < (r.x + r.w)  and (game.py + game.pw) > r.y and game.py < (r.y + r.h) then
+      -- if (game.px + game.pw) > r.x and (game.py + game.pw) > r.y and game.px < r.x and game.py < r.y then
+      -- 	 game.px = r.x - game.pw
+      -- end
+      -- if game.px < (r.x + r.w) and (game.px + game.pw) > (r.x + r.w) and game.py < r.y and (game.py + game.pw) > r.y then
+      -- 	 game.px = r.x + r.w
+      -- end
+      -- 1
+      if game.px < r.x and game.px + game.pw > r.x and game.py < r.y and game.py + game.ph > r.y then
+	 game.px = r.x - game.pw
+	 game.py = r.y - game.ph
+      end
+      -- 2
+      if game.px > r.x and game.px < (r.x + r.w) and game.px + game.pw < r.x + r.w and game.py < r.y and game.py + game.ph > r.y then
+	 game.py = r.y - game.ph
+      end
+      -- 3
+      -- 4
+      if game.px < r.x and game.px + game.pw > r.x and game.px < r.x + r.w and game.py > r.y and game.py + game.ph < r.y + r.h then
+	 game.px = r.x - game.pw
+      end
+      -- 5
+      -- 6
+      if game.px > r.x and game.px < r.x + r.w and game.px + game.pw > r.x + r.w and game.py > r.y and game.py + game.ph < r.y + r.h then
+	 game.px = r.x + r.w
+      end
+      -- 7
+      -- 8
+      -- 9
+   end
 end
 
 function game.exit()
@@ -115,7 +148,7 @@ end
 
 function game.draw_player()
    love.graphics.setColor(67,198,69)
-   love.graphics.rectangle("fill", game.px, game.py, game.pw, game.pw)
+   love.graphics.rectangle("fill", game.px, game.py, game.pw, game.ph)
 end
 
 function game.draw_exit()
@@ -123,8 +156,15 @@ function game.draw_exit()
    love.graphics.rectangle("fill", game.exitx, game.exity, game.exitw, game.exitw)
 end
 
+function game.draw_level()
+   love.graphics.setColor(140,0,0)
+   for _,r in ipairs(game.level) do
+      love.graphics.rectangle("fill", r.x, r.y, r.w, r.h)
+   end
+end
+
 function game.create_level1()
    local level = {}
-
+   table.insert(level, {x = game.borderx + 100, y = game.bordery + 100, w = 25, h  = 40})
    return level
 end
