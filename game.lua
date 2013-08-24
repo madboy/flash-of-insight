@@ -3,28 +3,32 @@ game = {}
 function game.load()
    game.clock = 10
    
+   game.borderx = 100
+   game.bordery = 100
+   game.borderw = 300
+   game.borderh = 200
+
    game.pw = 10
-   game.px = 100
-   game.py = 100
+   game.px = game.borderx
+   game.py = game.bordery
 
    game.br = 0
    game.bg = 0
    game.bb = 0
 
    game.exitw = 20
-   game.exitx = 300 - game.exitw
-   game.exity = 200 - game.exitw
+   game.exitx = game.borderx + game.borderw - game.exitw
+   game.exity = game.bordery + game.borderh - game.exitw
+
+   game.level1 = game.create_level1()
 end
 
 function game.draw()
    love.graphics.setBackgroundColor(game.br, game.bg, game.bb)
-   love.graphics.setColor(255,0,0)
-   love.graphics.printf("battery remaining: "..game.clock, 0, 0, love.graphics.getWidth(), "center")
-   love.graphics.setColor(120,120,120)
-   love.graphics.rectangle("line", 100, 100, 200, 100)
-   love.graphics.rectangle("fill", game.px, game.py, game.pw, game.pw)
-   love.graphics.setColor(0,120,120)
-   love.graphics.rectangle("fill", game.exitx, game.exity, game.exitw, game.exitw)
+   game.draw_battery()
+   game.draw_border()
+   game.draw_player()
+   game.draw_exit()
    love.graphics.setColor(255,255,255)
 end
 
@@ -54,6 +58,8 @@ function game.update(dt)
       game.px = game.px + 1
    end
 
+   game.border_collision()
+   game.obstacle_collision()
    game.exit()
 end
 
@@ -71,10 +77,54 @@ end
 function game.flashlight()
 end
 
+function game.border_collision()
+   if game.px < game.borderx then
+      game.px = game.borderx
+   end
+   if (game.px + game.pw) > (game.borderx + game.borderw) then
+      game.px = game.borderx + game.borderw - game.pw
+   end
+   if game.py < game.bordery then
+      game.py = game.bordery
+   end
+   if (game.py + game.pw) > (game.bordery + game.borderh) then
+      game.py = game.bordery + game.borderh - game.pw
+   end
+end
+
+function game.obstacle_collision()
+end
+
 function game.exit()
    if game.px > game.exitx and game.py > game.exity then
       game.br = 255
       game.bg = 0
       game.bb = 150
    end
+end
+
+function game.draw_battery()
+   love.graphics.setColor(255,0,0)
+   love.graphics.printf("battery remaining: "..game.clock, 0, 0, love.graphics.getWidth(), "center")
+end
+
+function game.draw_border()
+   love.graphics.setColor(120,120,120)
+   love.graphics.rectangle("line", game.borderx, game.bordery, game.borderw, game.borderh)
+end
+
+function game.draw_player()
+   love.graphics.setColor(67,198,69)
+   love.graphics.rectangle("fill", game.px, game.py, game.pw, game.pw)
+end
+
+function game.draw_exit()
+   love.graphics.setColor(0,120,120)
+   love.graphics.rectangle("fill", game.exitx, game.exity, game.exitw, game.exitw)
+end
+
+function game.create_level1()
+   local level = {}
+
+   return level
 end
