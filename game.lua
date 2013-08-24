@@ -27,10 +27,10 @@ end
 function game.draw()
    love.graphics.setBackgroundColor(game.br, game.bg, game.bb)
    game.draw_battery()
-   game.draw_border()
+   game.draw_border() 
    game.draw_player()
    game.draw_exit()
-   game.draw_level()
+   if game.flashlight then game.draw_level() end
    love.graphics.setColor(255,255,255)
 end
 
@@ -41,9 +41,7 @@ function game.update(dt)
       else
 	 game.clock = 0
       end
-      game.br = 200
-      game.bg = 200
-      game.bb = 190
+      game.flashlight = true
    end
 
    -- player movement
@@ -70,13 +68,8 @@ end
 
 function game.keyreleased(key, unicode)
    if key == " " then
-      game.br = 0
-      game.bg = 0
-      game.bb = 0
+      game.flashlight = false
    end
-end
-
-function game.flashlight()
 end
 
 function game.border_collision()
@@ -96,13 +89,6 @@ end
 
 function game.obstacle_collision()
    for _, r in ipairs(game.level) do
-      --if (game.px + game.pw) > r.x and game.px < (r.x + r.w)  and (game.py + game.pw) > r.y and game.py < (r.y + r.h) then
-      -- if (game.px + game.pw) > r.x and (game.py + game.pw) > r.y and game.px < r.x and game.py < r.y then
-      -- 	 game.px = r.x - game.pw
-      -- end
-      -- if game.px < (r.x + r.w) and (game.px + game.pw) > (r.x + r.w) and game.py < r.y and (game.py + game.pw) > r.y then
-      -- 	 game.px = r.x + r.w
-      -- end
       -- 1
       if game.px < r.x and game.px + game.pw > r.x and game.py < r.y and game.py + game.ph > r.y then
 	 game.px = r.x - game.pw
