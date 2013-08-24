@@ -6,17 +6,25 @@ function game.load()
    game.borderw = 0
    game.borderh = 0
 
-   game.levels = {game.create_level1, game.create_level2, game.create_level3}
+   game.wt = 20
+   game.clock = 10
+
+   game.levels = {game.create_level1, game.create_level2, game.create_level3, game.create_level4}
    game.current_level = 1
    game.reset(game.current_level)
+
+
 end
 
 function game.reset(level)
    game.pw = 10
    game.ph = 10
 
+   game.exitw = 20
+   game.exith = 20
+
    game.level = game.levels[level]()
-   game.clock = 10
+   --game.clock = 10
    game.flashlight = false
 
    game.px = game.borderx
@@ -46,6 +54,7 @@ function game.update(dt)
 	 game.flashlight = true
       else
 	 game.clock = 0
+	 game.flashlight = false
       end
       
    end
@@ -69,6 +78,7 @@ function game.update(dt)
 
    for _, r in ipairs(game.level) do
       if game.obstacle_collision(px, py, r) then
+	 love.audio.play(wall_s)
 	 px = game.px
 	 py = game.py
 	 break
@@ -94,15 +104,19 @@ end
 
 function game.border_collision()
    if game.px < game.borderx then
+      love.audio.play(border_s)
       game.px = game.borderx
    end
    if (game.px + game.pw) > (game.borderx + game.borderw) then
+      love.audio.play(border_s)
       game.px = game.borderx + game.borderw - game.pw
    end
    if game.py < game.bordery then
+      love.audio.play(border_s)
       game.py = game.bordery
    end
    if (game.py + game.pw) > (game.bordery + game.borderh) then
+      love.audio.play(border_s)
       game.py = game.bordery + game.borderh - game.ph
    end
 end
@@ -113,6 +127,7 @@ end
 
 function game.exit()
    if game.px + game.pw > game.exitx and game.py + game.ph > game.exity and game.py < game.exity + game.exith  and game.px < game.exitx + game.exitw then
+      love.audio.play(exit_s)
       if game.current_level < table.getn(game.levels) then
 	 game.current_level = game.current_level + 1
 	 game.reset(game.current_level)
@@ -155,13 +170,11 @@ end
 
 function game.create_level1()
    game.levelname = "level 1"
-   game.borderx = 100
-   game.bordery = 100
-   game.borderw = 300
+   game.borderx = 200
+   game.bordery = 200
+   game.borderw = 400
    game.borderh = 200
 
-   game.exitw = 20
-   game.exith = 20
    game.exitx = game.borderx + game.borderw - game.exitw
    game.exity = game.bordery + game.borderh - game.exitw
 
@@ -171,41 +184,64 @@ end
 
 function game.create_level2()
    game.levelname = "level 2"
-   game.borderx = 100
-   game.bordery = 100
-   game.borderw = 300
+   game.borderx = 200
+   game.bordery = 200
+   game.borderw = 400
    game.borderh = 200
 
-   game.exitw = 20
-   game.exith = 20
    game.exitx = game.borderx + game.borderw - game.exitw
    game.exity = game.bordery + game.borderh - game.exitw
 
    local level = {}
-   table.insert(level, {x = game.borderx + 100, y = game.bordery, w = 20, h = game.borderh - 45})
-   table.insert(level, {x = game.borderx + 200, y = game.bordery+45, w = 20, h = game.borderh - 45})
+   table.insert(level, {x = game.borderx + 100, y = game.bordery, w = 20, h = game.borderh - game.wt})
+   table.insert(level, {x = game.borderx + 200, y = game.bordery + game.wt, w = 20, h = game.borderh - game.wt})
+   table.insert(level, {x = game.borderx + 300, y = game.bordery, w = 20, h = game.borderh - game.wt})
    return level
 end
 
 function game.create_level3()
    game.levelname = "level 3"
-   game.borderx = 100
-   game.bordery = 100
-   game.borderw = 300
+   game.borderx = 200
+   game.bordery = 200
+   game.borderw = 400
    game.borderh = 200
 
-   game.exitw = 20
-   game.exith = 20
-   game.exitx = game.borderx + game.borderw  - game.exitw
-   game.exity = game.bordery + game.borderh/2 - game.exitw
 
    local level = {}
    local corner1x = game.borderx + game.borderw - game.exitw * 3
    local corner1y = game.bordery + game.ph*3
    local corner2y = corner1y + game.exith*5
-   table.insert(level, {x = corner1x, y = corner1y, w = game.borderx + game.borderw - corner1x, h = game.exith})
-   table.insert(level, {x = corner1x, y = corner2y, w = game.borderx + game.borderw - corner1x, h = game.exith})
-   table.insert(level, {x = corner1x - game.exith, y = corner1y, w = game.exith, h = game.exith*2.5})
-   table.insert(level, {x = corner1x - game.exith, y = corner2y - game.exith*1.5, w = game.exith, h = game.exith*2.5})
+
+   game.exitx = game.borderx + game.borderw - game.exitw
+   game.exity = corner1y + game.exith
+
+   table.insert(level, {x = corner1x, y = corner1y, w = game.borderx + game.borderw - corner1x, h = game.wt})
+   table.insert(level, {x = corner1x, y = corner2y, w = game.borderx + game.borderw - corner1x, h = game.wt})
+   table.insert(level, {x = corner1x - game.exith, y = corner1y, w = game.wt, h = game.exith*2.5})
+   table.insert(level, {x = corner1x - game.exith, y = corner2y - game.exith*1.5, w = game.wt, h = game.exith*2.5})
+   return level
+end
+
+
+function game.create_level4()
+   game.levelname = "level 4"
+   game.borderx = 200
+   game.bordery = 200
+   game.borderw = 400
+   game.borderh = 200
+
+   game.exitx = 400 - game.exitw
+   game.exity = 320 - game.exith
+
+   local level = {}
+   local c1x = 300
+   local c1y = 250
+   local c2x = c1x + game.wt
+   table.insert(level, {x = c1x, y = c1y, w = game.wt, h = 100}) -- 1
+   table.insert(level, {x = c1x + game.wt, y = c1y, w = 175, h = game.wt}) -- 2
+   table.insert(level, {x = c1x, y = c1y + 100, w = 175 + game.wt, h = game.wt}) -- 3
+   table.insert(level, {x = c1x + 175, y = c1y + 50, w = game.wt, h = 50}) -- 4
+   table.insert(level, {x = game.exitx+game.exitw+10, y = c1y + game.wt, w = game.wt, h = 65}) -- 5
+   table.insert(level, {x = game.exitx - 20, y = c1y + 70, w = 70, h = game.wt}) -- 6
    return level
 end
