@@ -54,19 +54,15 @@ function game.update(dt)
    local px = game.px
    local py = game.py
    if love.keyboard.isDown("up") then
-      --game.py = game.py - 1
       py = py - 1
    end
    if love.keyboard.isDown("down") then
-      --game.py = game.py + 1
       py = py + 1
    end
    if love.keyboard.isDown("left") then
-      --game.px = game.px - 1
       px = px - 1
    end
    if love.keyboard.isDown("right") then
-      -- game.px = game.px + 1
       px = px + 1
    end
 
