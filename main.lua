@@ -16,7 +16,10 @@ function love.load()
    font = love.graphics.newImageFont(imgs["game_font_15"], "abcdefghijklmnopqrstuvwxyz,.!:;?1234567890 \"")
    love.graphics.setFont(font)
    
-   state = 'title'
+   state = "game"
+
+   title.load()
+   game.load()
 end
 
 function love.keypressed(key, unicode)
@@ -30,6 +33,12 @@ function love.keypressed(key, unicode)
       title.keypressed(key, unicode)
    elseif state == "game" then
       game.keypressed(key, unicode)
+   end
+end
+
+function love.keyreleased(key, unicode)
+   if state == "game" then
+      game.keyreleased(key, unicode)
    end
 end
 
