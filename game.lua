@@ -7,7 +7,7 @@ function game.load()
    game.borderh = 0
 
    game.wt = 20
-   --game.clock = 10
+   game.clock = 10
 
    game.levels = {game.create_level1, game.create_level2, game.create_level3, game.create_level4, game.create_level5}
    game.current_level = 1
@@ -17,7 +17,7 @@ function game.load()
 end
 
 function game.reset(level)
-   game.clock = 10
+   if gamemode == "easy" then game.clock = 10 end
    game.pw = imgs["player"]:getWidth()
    game.ph = imgs["player"]:getHeight()
 

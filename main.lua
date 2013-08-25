@@ -25,6 +25,7 @@ function love.load()
    title_s:setLooping(true)
    
    state = "title"
+   gamemode = "normal"
 
    title.load()
    intro.load()
