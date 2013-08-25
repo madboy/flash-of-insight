@@ -42,7 +42,6 @@ function game.draw()
    game.draw_header()
    if game.flashlight then game.draw_level() end
    game.draw_player()
-   --game.draw_exit()
    game.draw_border() 
    love.graphics.setColor(255,255,255)
 end
@@ -146,8 +145,13 @@ function game.draw_header()
    end
    battery_img = "battery_"..blvl
    love.graphics.draw(imgs[battery_img], game.borderx + game.borderw - imgs["battery_1"]:getWidth(), game.bordery - imgs["battery_1"]:getHeight(), 0, 1, 1, 8, 16)
-   love.graphics.setColor(255,0,0)
-   love.graphics.printf(game.levelname, 0, 30, love.graphics.getWidth(), "center")
+   love.graphics.setColor(255,20,147)
+   local scale = 3
+   love.graphics.push()
+   love.graphics.scale(scale, scale)
+   love.graphics.printf(game.levelname, 0, 30, love.graphics.getWidth()/scale, "center")
+   love.graphics.pop()
+   love.graphics.setColor(255,255,255)
 end
 
 function game.draw_border()
