@@ -42,7 +42,7 @@ function game.draw()
    game.draw_header()
    if game.flashlight then game.draw_level() end
    game.draw_player()
-   game.draw_exit()
+   --game.draw_exit()
    game.draw_border() 
    love.graphics.setColor(255,255,255)
 end
@@ -159,10 +159,10 @@ function game.draw_player()
    love.graphics.draw(imgs["player"], game.px, game.py)
 end
 
-function game.draw_exit()
-   love.graphics.setColor(255,255,255)
-   love.graphics.draw(imgs["exit"], game.exitx, game.exity)
-end
+-- function game.draw_exit()
+--    love.graphics.setColor(255,255,255)
+--    love.graphics.draw(imgs["exit"], game.exitx, game.exity)
+-- end
 
 function game.draw_level()
    love.graphics.setColor(90,90,90)
@@ -171,6 +171,8 @@ function game.draw_level()
    for _,r in ipairs(game.level) do
       love.graphics.rectangle("fill", r.x, r.y, r.w, r.h)
    end
+   love.graphics.setColor(255,255,255)
+   love.graphics.draw(imgs["exit"], game.exitx, game.exity)
 end
 
 function game.create_level1()
@@ -214,7 +216,7 @@ function game.create_level3()
 
    local level = {}
    local corner1x = game.borderx + game.borderw - game.exitw * 3
-   local corner1y = game.bordery + game.ph*3
+   local corner1y = game.bordery + game.exith*3
    local corner2y = corner1y + game.exith*5
 
    game.exitx = game.borderx + game.borderw - game.exitw
@@ -223,7 +225,7 @@ function game.create_level3()
    table.insert(level, {x = corner1x, y = corner1y, w = game.borderx + game.borderw - corner1x, h = game.wt})
    table.insert(level, {x = corner1x, y = corner2y, w = game.borderx + game.borderw - corner1x, h = game.wt})
    table.insert(level, {x = corner1x - game.exith, y = corner1y, w = game.wt, h = game.exith*2.5})
-   table.insert(level, {x = corner1x - game.exith, y = corner2y - game.exith*1.5, w = game.wt, h = game.exith*2.5})
+   table.insert(level, {x = corner1x - game.exith, y = corner2y-game.wt, w = game.wt, h = game.exith*2.5})
    return level
 end
 
@@ -246,7 +248,7 @@ function game.create_level4()
    table.insert(level, {x = c1x + game.wt, y = c1y, w = 175, h = game.wt}) -- 2
    table.insert(level, {x = c1x, y = c1y + 100, w = 175 + game.wt, h = game.wt}) -- 3
    table.insert(level, {x = c1x + 175, y = c1y + 50, w = game.wt, h = 50}) -- 4
-   table.insert(level, {x = game.exitx+game.exitw+10, y = c1y + game.wt, w = game.wt, h = 60}) -- 5
+   table.insert(level, {x = game.exitx+game.exitw+14, y = c1y + game.wt, w = game.wt, h = 60}) -- 5
    table.insert(level, {x = game.exitx - 20, y = c1y + 60, w = 70, h = game.wt}) -- 6
    return level
 end
