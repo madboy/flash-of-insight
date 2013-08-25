@@ -1,0 +1,3 @@
+- Game uses Love2d, https://www.love2d.org
+- Sounds are done vid cfxr, http://thirdcog.eu/apps/cfxr
+- Music with autotracker, https://github.com/wibblymat/ld24/blob/master/autotracker.py
