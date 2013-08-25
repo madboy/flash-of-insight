@@ -165,8 +165,7 @@ function game.draw_player()
 end
 
 function game.draw_level()
-   love.graphics.setColor(90,90,90)
-   love.graphics.rectangle("fill", game.borderx, game.bordery, game.borderw, game.borderh)
+   love.graphics.draw(imgs["floor"], game.borderx, game.bordery)
    love.graphics.setColor(140,0,0)
    for _,r in ipairs(game.level) do
       love.graphics.rectangle("fill", r.x, r.y, r.w, r.h)

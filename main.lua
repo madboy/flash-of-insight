@@ -6,7 +6,7 @@ require("over")
 require("intro")
 
 function love.load()
-   imgf = {"game_font_15", "player", "title", "exit", "battery_1", "battery_2", "battery_3", "battery_4", "battery_5", "battery_6", "battery_7", "battery_8", "battery_9", "battery_10", "battery_11"}
+   imgf = {"game_font_15", "player", "title", "exit", "floor","battery_1", "battery_2", "battery_3", "battery_4", "battery_5", "battery_6", "battery_7", "battery_8", "battery_9", "battery_10", "battery_11"}
    imgs = {}
    for _,v in ipairs(imgf) do
       imgs[v] = love.graphics.newImage("assets/"..v..".png")
