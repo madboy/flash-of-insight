@@ -10,7 +10,7 @@ function game.load()
    game.clock = 10
 
    game.levels = {game.create_level1, game.create_level2, game.create_level3, game.create_level4}
-   game.current_level = 4
+   game.current_level = 1
    game.reset(game.current_level)
 
 
@@ -20,8 +20,8 @@ function game.reset(level)
    game.pw = imgs["player"]:getWidth()
    game.ph = imgs["player"]:getHeight()
 
-   game.exitw = 20
-   game.exith = 20
+   game.exitw = imgs["exit"]:getWidth()
+   game.exith = imgs["exit"]:getHeight()
 
    game.level = game.levels[level]()
 
@@ -138,7 +138,14 @@ function game.exit()
 end
 
 function game.draw_header()
-   love.graphics.draw(imgs["battery_1"], game.borderx + game.borderw - imgs["battery_1"]:getWidth(), game.bordery - imgs["battery_1"]:getHeight(), 0, 1, 1, 8, 16)
+   local blvl = 0
+   if game.clock > 0 then
+      blvl = 11 - math.floor(game.clock)
+   else
+      blvl = 11
+   end
+   battery_img = "battery_"..blvl
+   love.graphics.draw(imgs[battery_img], game.borderx + game.borderw - imgs["battery_1"]:getWidth(), game.bordery - imgs["battery_1"]:getHeight(), 0, 1, 1, 8, 16)
    love.graphics.setColor(255,0,0)
    love.graphics.printf(game.levelname, 0, 30, love.graphics.getWidth(), "center")
 end
@@ -153,8 +160,8 @@ function game.draw_player()
 end
 
 function game.draw_exit()
-   love.graphics.setColor(0,120,120)
-   love.graphics.rectangle("fill", game.exitx, game.exity, game.exitw, game.exitw)
+   love.graphics.setColor(255,255,255)
+   love.graphics.draw(imgs["exit"], game.exitx, game.exity)
 end
 
 function game.draw_level()
