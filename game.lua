@@ -9,7 +9,7 @@ function game.load()
    game.wt = 20
    game.clock = 10
 
-   game.levels = {game.create_level1, game.create_level2, game.create_level3, game.create_level4}
+   game.levels = {game.create_level1, game.create_level2, game.create_level3, game.create_level4, game.create_level5}
    game.current_level = 1
    game.reset(game.current_level)
 
@@ -163,11 +163,6 @@ function game.draw_player()
    love.graphics.draw(imgs["player"], game.px, game.py)
 end
 
--- function game.draw_exit()
---    love.graphics.setColor(255,255,255)
---    love.graphics.draw(imgs["exit"], game.exitx, game.exity)
--- end
-
 function game.draw_level()
    love.graphics.setColor(90,90,90)
    love.graphics.rectangle("fill", game.borderx, game.bordery, game.borderw, game.borderh)
@@ -254,5 +249,28 @@ function game.create_level4()
    table.insert(level, {x = c1x + 175, y = c1y + 50, w = game.wt, h = 50}) -- 4
    table.insert(level, {x = game.exitx+game.exitw+14, y = c1y + game.wt, w = game.wt, h = 60}) -- 5
    table.insert(level, {x = game.exitx - 20, y = c1y + 60, w = 70, h = game.wt}) -- 6
+   return level
+end
+
+function game.create_level5()
+   game.levelname = "level 5"
+   game.borderx = 200
+   game.bordery = 200
+   game.borderw = 400
+   game.borderh = 200
+
+   game.exitx = game.borderx + game.borderw - game.exitw
+   game.exity = 310 - game.exith
+
+   local level = {}
+   table.insert(level, {x = game.borderx, y = game.bordery + 50, w = 25, h = game.wt}) -- 1
+   table.insert(level, {x = game.borderx + 60, y = game.bordery, w = game.wt, h = 25}) -- 2
+   table.insert(level, {x = game.borderx + 25 + 25, y = game.bordery + 50, w = game.borderw - 25 - 25, h = game.wt}) -- 3
+   table.insert(level, {x = game.borderx + 60, y = game.bordery + 50 + game.wt, w = game.wt, h = 60}) -- 4
+   table.insert(level, {x = game.borderx + 60, y = game.bordery + 50 + game.wt + 60, w = 120, h = game.wt}) -- 5
+   table.insert(level, {x = game.borderx + 60 + 120 + 25, y = game.bordery + 50 + game.wt + 60, w = game.borderw - (60 + 120 + 25), h = game.wt}) -- 6
+   table.insert(level, {x = game.borderx + 60, y = game.bordery + 50 + game.wt + 60 + 40, w = game.wt, h = game.borderh - ( 50 + game.wt + 60 + 40)}) -- 7
+   table.insert(level, {x = game.borderx + 60 + 120 + 25 + 60, y = game.bordery + 50, w = game.wt, h = 45}) -- 8
+   table.insert(level, {x = game.borderx + 60 + 120 + 25 + 60, y = game.bordery + 50 + 45 + 25, w = game.wt, h = 60}) -- 9
    return level
 end
