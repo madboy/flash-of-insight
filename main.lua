@@ -5,7 +5,7 @@ require('game')
 require("over")
 
 function love.load()
-   imgf = {"game_font_15"}
+   imgf = {"game_font_15", "player", "title", "battery_1"}
    imgs = {}
    for _,v in ipairs(imgf) do
       imgs[v] = love.graphics.newImage("assets/"..v..".png")
@@ -22,7 +22,7 @@ function love.load()
    border_s = love.audio.newSource("assets/border.ogg", "static")
    title_s = love.audio.newSource("assets/title.ogg", "stream")
    
-   state = "title"
+   state = "game"
 
    title.load()
    game.load()

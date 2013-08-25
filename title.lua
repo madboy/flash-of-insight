@@ -5,9 +5,7 @@ end
 
 function title.draw()
    love.audio.play(title_s)
-   love.graphics.setColor(60,190,35)
-   love.graphics.printf("flash of insight", 0, 0, love.graphics.getWidth(), "center")
-   love.graphics.printf("press enter to start", 0, 20, love.graphics.getWidth(), "center")
+   love.graphics.draw(imgs["title"], love.graphics.getWidth()/2, love.graphics.getHeight()/2, 0, 3, 3, 50, 37)
    love.graphics.setColor(255,255,255)
 end
 

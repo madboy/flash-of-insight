@@ -10,21 +10,21 @@ function game.load()
    game.clock = 10
 
    game.levels = {game.create_level1, game.create_level2, game.create_level3, game.create_level4}
-   game.current_level = 1
+   game.current_level = 4
    game.reset(game.current_level)
 
 
 end
 
 function game.reset(level)
-   game.pw = 10
-   game.ph = 10
+   game.pw = imgs["player"]:getWidth()
+   game.ph = imgs["player"]:getHeight()
 
    game.exitw = 20
    game.exith = 20
 
    game.level = game.levels[level]()
-   --game.clock = 10
+
    game.flashlight = false
 
    game.px = game.borderx
@@ -39,7 +39,7 @@ end
 
 function game.draw()
    love.graphics.setBackgroundColor(game.br, game.bg, game.bb)
-   game.draw_battery()
+   game.draw_header()
    if game.flashlight then game.draw_level() end
    game.draw_player()
    game.draw_exit()
@@ -137,21 +137,19 @@ function game.exit()
    end
 end
 
-function game.draw_battery()
+function game.draw_header()
+   love.graphics.draw(imgs["battery_1"], game.borderx + game.borderw - imgs["battery_1"]:getWidth(), game.bordery - imgs["battery_1"]:getHeight(), 0, 1, 1, 8, 16)
    love.graphics.setColor(255,0,0)
-   love.graphics.printf("battery remaining: "..game.clock, 0, 0, love.graphics.getWidth(), "center")
+   love.graphics.printf(game.levelname, 0, 30, love.graphics.getWidth(), "center")
 end
 
 function game.draw_border()
    love.graphics.setColor(120,120,120)
    love.graphics.rectangle("line", game.borderx, game.bordery, game.borderw, game.borderh)
-   love.graphics.setColor(255,0,0)
-   love.graphics.printf(game.levelname, 0, 30, love.graphics.getWidth(), "center")
 end
 
 function game.draw_player()
-   love.graphics.setColor(67,198,69)
-   love.graphics.rectangle("fill", game.px, game.py, game.pw, game.ph)
+   love.graphics.draw(imgs["player"], game.px, game.py)
 end
 
 function game.draw_exit()
@@ -231,7 +229,7 @@ function game.create_level4()
    game.borderh = 200
 
    game.exitx = 400 - game.exitw
-   game.exity = 320 - game.exith
+   game.exity = 310 - game.exith
 
    local level = {}
    local c1x = 300
@@ -241,7 +239,7 @@ function game.create_level4()
    table.insert(level, {x = c1x + game.wt, y = c1y, w = 175, h = game.wt}) -- 2
    table.insert(level, {x = c1x, y = c1y + 100, w = 175 + game.wt, h = game.wt}) -- 3
    table.insert(level, {x = c1x + 175, y = c1y + 50, w = game.wt, h = 50}) -- 4
-   table.insert(level, {x = game.exitx+game.exitw+10, y = c1y + game.wt, w = game.wt, h = 65}) -- 5
-   table.insert(level, {x = game.exitx - 20, y = c1y + 70, w = 70, h = game.wt}) -- 6
+   table.insert(level, {x = game.exitx+game.exitw+10, y = c1y + game.wt, w = game.wt, h = 60}) -- 5
+   table.insert(level, {x = game.exitx - 20, y = c1y + 60, w = 70, h = game.wt}) -- 6
    return level
 end
