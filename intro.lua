@@ -27,5 +27,6 @@ function intro.keypressed(key, unicode)
    if key == "e" then
       state = "game"
       gamemode = "easy"
+      game.load()
    end
 end
