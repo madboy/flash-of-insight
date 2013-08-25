@@ -7,7 +7,7 @@ function game.load()
    game.borderh = 0
 
    game.wt = 20
-   game.clock = 10
+   --game.clock = 10
 
    game.levels = {game.create_level1, game.create_level2, game.create_level3, game.create_level4, game.create_level5}
    game.current_level = 1
@@ -17,6 +17,7 @@ function game.load()
 end
 
 function game.reset(level)
+   game.clock = 10
    game.pw = imgs["player"]:getWidth()
    game.ph = imgs["player"]:getHeight()
 
@@ -39,8 +40,8 @@ end
 
 function game.draw()
    love.graphics.setBackgroundColor(game.br, game.bg, game.bb)
-   game.draw_header()
    if game.flashlight then game.draw_level() end
+   game.draw_header()
    game.draw_player()
    game.draw_border() 
    love.graphics.setColor(255,255,255)
@@ -173,8 +174,15 @@ function game.draw_level()
    love.graphics.setColor(255,255,255)
    love.graphics.draw(imgs["exit"], game.exitx, game.exity)
    love.graphics.setColor(0,0,0)
-   love.graphics.polygon("fill", game.px, game.py, game.px + 50, game.py - 50, game.px + 50, game.bordery, game.borderx, game.bordery, game.borderx, game.bordery + game.borderh, game.px + 50, game.bordery + game.borderh, game.px + 50, game.py + 50, game.px, game.py)
-   love.graphics.polygon("fill", game.px + 50, game.bordery, game.borderx + game.borderw, game.bordery, game.borderx + game.borderw, game.bordery + game.borderh, game.px + 50, game.bordery + game.borderh, game.px + 50, game.py + 50)
+
+   -- draw the cowering darkness for the parts that the flashlight don't reach
+   local beamx = 65
+   local beamy = 50
+   local beamsx = game.px
+   local beamsy = game.py + game.ph/2
+   love.graphics.polygon("fill", beamsx, beamsy, beamsx + beamx, beamsy - beamy, beamsx + beamx, game.bordery, game.borderx, game.bordery, game.borderx, game.bordery + game.borderh, beamsx + beamx, game.bordery + game.borderh, beamsx + beamx, beamsy + beamy, beamsx, beamsy)
+   love.graphics.polygon("fill", beamsx + beamx, game.bordery, game.borderx + game.borderw, game.bordery, game.borderx + game.borderw, game.bordery + game.borderh, beamsx + beamx, game.bordery + game.borderh, beamsx + beamx, beamsy + beamy)
+
    love.graphics.setColor(255,255,255)
 end
 
