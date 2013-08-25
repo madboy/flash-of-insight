@@ -175,13 +175,17 @@ function game.draw_level()
    love.graphics.draw(imgs["exit"], game.exitx, game.exity)
    love.graphics.setColor(0,0,0)
 
-   -- draw the cowering darkness for the parts that the flashlight don't reach
-   local beamx = 65
-   local beamy = 50
-   local beamsx = game.px
-   local beamsy = game.py + game.ph/2
-   love.graphics.polygon("fill", beamsx, beamsy, beamsx + beamx, beamsy - beamy, beamsx + beamx, game.bordery, game.borderx, game.bordery, game.borderx, game.bordery + game.borderh, beamsx + beamx, game.bordery + game.borderh, beamsx + beamx, beamsy + beamy, beamsx, beamsy)
-   love.graphics.polygon("fill", beamsx + beamx, game.bordery, game.borderx + game.borderw, game.bordery, game.borderx + game.borderw, game.bordery + game.borderh, beamsx + beamx, game.bordery + game.borderh, beamsx + beamx, beamsy + beamy)
+   -- draw the covering darkness for the parts that the flashlight don't reach
+   local bx = game.px + game.pw/2
+   local by = game.py + game.ph/2
+   local blx = 75
+   local bly = 50
+   -- upper
+   love.graphics.polygon("fill", bx - blx, by, game.borderx, by, game.borderx, game.bordery, bx, game.bordery, bx, by - bly, bx - blx, by - 25, bx - blx, by)
+   love.graphics.polygon("fill", bx + blx, by, game.borderx + game.borderw, by, game.borderx + game.borderw, game.bordery, bx, game.bordery, bx, by - bly, bx + blx, by - 25, bx + blx, by)
+   -- lower
+   love.graphics.polygon("fill", bx - blx, by, game.borderx, by, game.borderx, game.bordery + game.borderh, bx, game.bordery + game.borderh, bx, by + bly, bx - blx, by + 25, bx - blx, by)
+   love.graphics.polygon("fill", bx + blx, by, game.borderx + game.borderw, by, game.borderx + game.borderw, game.bordery + game.borderh, bx, game.bordery + game.borderh, bx, by + bly, bx + blx, by + 25, bx + blx, by)
 
    love.graphics.setColor(255,255,255)
 end
