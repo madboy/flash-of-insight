@@ -172,6 +172,10 @@ function game.draw_level()
    end
    love.graphics.setColor(255,255,255)
    love.graphics.draw(imgs["exit"], game.exitx, game.exity)
+   love.graphics.setColor(0,0,0)
+   love.graphics.polygon("fill", game.px, game.py, game.px + 50, game.py - 50, game.px + 50, game.bordery, game.borderx, game.bordery, game.borderx, game.bordery + game.borderh, game.px + 50, game.bordery + game.borderh, game.px + 50, game.py + 50, game.px, game.py)
+   love.graphics.polygon("fill", game.px + 50, game.bordery, game.borderx + game.borderw, game.bordery, game.borderx + game.borderw, game.bordery + game.borderh, game.px + 50, game.bordery + game.borderh, game.px + 50, game.py + 50)
+   love.graphics.setColor(255,255,255)
 end
 
 function game.create_level1()
